@@ -16,7 +16,7 @@ import org.bukkit.plugin.Plugin;
 
 /**
  * @author Kev575
- * @versoin 1.0
+ * @version 1.0a
  */
 @SuppressWarnings("unused")
 public class KevsInventory {
