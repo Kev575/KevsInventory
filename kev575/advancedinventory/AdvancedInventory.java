@@ -65,8 +65,9 @@ public final class AdvancedInventory {
 					return;
 				if (!e.getWhoClicked().getUniqueId().equals(getPlayer().getUniqueId()))
 					return;
-				if (e.getWhoClicked().getOpenInventory().getTopInventory() == null
-						|| !e.getWhoClicked().getOpenInventory().getTopInventory().equals(toInventory()))
+				if (e.getWhoClicked().getOpenInventory() == null
+						|| e.getWhoClicked().getOpenInventory().getTopInventory() == null
+						|| e.getWhoClicked().getOpenInventory().getTopInventory() != inv)
 					return;
 				AdvancedInventoryClickEvent event = new AdvancedInventoryClickEvent(getPlayer(), e.getCurrentItem(),
 						e.getSlot(), toItemPosition(e.getSlot()).getRow(), toItemPosition(e.getSlot()).getColumn(),
@@ -83,6 +84,10 @@ public final class AdvancedInventory {
 					return;
 				if (!e.getPlayer().getUniqueId().equals(getPlayer().getUniqueId()))
 					return;
+				if (e.getPlayer().getOpenInventory() == null
+						|| e.getPlayer().getOpenInventory().getTopInventory() == null
+						|| e.getPlayer().getOpenInventory().getTopInventory() != inv)
+					return;
 				for (AdvancedInventoryListener l : listeners) {
 					l.onClose(new AdvancedInventoryCloseEvent(getPlayer()));
 				}
@@ -93,6 +98,10 @@ public final class AdvancedInventory {
 				if (inv == null)
 					return;
 				if (!e.getPlayer().getUniqueId().equals(getPlayer().getUniqueId()))
+					return;
+				if (e.getPlayer().getOpenInventory() == null
+						|| e.getPlayer().getOpenInventory().getTopInventory() == null
+						|| e.getPlayer().getOpenInventory().getTopInventory() != inv)
 					return;
 				destroy();
 			}
@@ -170,6 +179,7 @@ public final class AdvancedInventory {
 	 * @param column
 	 *            the column
 	 * @param item
+	 *            the item
 	 * @return true when done
 	 */
 	public boolean setItem(int row, int column, ItemStack item) {
@@ -201,7 +211,9 @@ public final class AdvancedInventory {
 	/**
 	 * 
 	 * @param slot
+	 *            the slot
 	 * @param item
+	 *            the item
 	 * @return true when done
 	 */
 	public boolean setItem(int slot, ItemStack item) {
@@ -237,7 +249,7 @@ public final class AdvancedInventory {
 	 *            inventory integer
 	 *            {@link AdvancedInventory#toInventoryInteger(ItemPosition)}
 	 * @return {@link ItemPosition} row and column; null when
-	 *         <code>invint < 0</code>
+	 *         <code>invint &#60; 0</code>
 	 */
 	public ItemPosition toItemPosition(int invint) {
 		if (invint < 0) {
